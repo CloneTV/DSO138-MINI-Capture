@@ -25,3 +25,5 @@ PW, 0.487ms            - measured pulse width
 Duty, 50.5 %           - measured duty cycle
 SampleInterval,00020us - sample interval time
 ```
+
+see https://www.rudiswiki.de/wiki9/JyeTechDSO150
