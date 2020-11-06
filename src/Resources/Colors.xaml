@@ -1,0 +1,39 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSO138_Capture.Resources">
+
+    <Color x:Key="ErrorB">#FFA70101</Color>
+    <Color x:Key="ErrorF">#FFDE0000</Color>
+
+    <Color x:Key="DSObVSen">#FF006400</Color>
+    <Color x:Key="DSOfVSen">#FF03A103</Color>
+
+    <Color x:Key="DSObCouple">#FF5F0505</Color>
+    <Color x:Key="DSOfCouple">#FF9C0808</Color>
+
+    <Color x:Key="DSObTimebase">#FF055F4F</Color>
+    <Color x:Key="DSOfTimebase">#FF089C82</Color>
+
+    <Color x:Key="DSObVPos">#FF05475F</Color>
+    <Color x:Key="DSOfVPos">#FF08749C</Color>
+
+    <Color x:Key="DSObHPos">#FF05475F</Color>
+    <Color x:Key="DSOfHPos">#FF08749C</Color>
+
+    <Color x:Key="DSObTriggerMode">#FF42055F</Color>
+    <Color x:Key="DSOfTriggerMode">#FF6D089C</Color>
+
+    <Color x:Key="DSObTriggerSlope">#FF5F055C</Color>
+    <Color x:Key="DSOfTriggerSlope">#FF9C0897</Color>
+
+    <Color x:Key="DSObTriggerLevel">#FF5F055C</Color>
+    <Color x:Key="DSOfTriggerLevel">#FF9C0897</Color>
+
+    <Color x:Key="DSObSampleInterval">#FF05325F</Color>
+    <Color x:Key="DSOfSampleInterval">#FF08519C</Color>
+
+    <Color x:Key="DSObRecordLength">#FF404040</Color>
+    <Color x:Key="DSOfRecordLength">#FF9A9A9A</Color>
+
+</ResourceDictionary>

@@ -1,6 +1,14 @@
 # Prerequisites
 *.d
 
+src/AppPackages/*
+src/BundleArtifacts/*
+src/bin/*
+src/obj/*
+src/.vs/*
+src/*.cmd
+*.pfx
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +38,4 @@
 *.exe
 *.out
 *.app
+/docs/bin

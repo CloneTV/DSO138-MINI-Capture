@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageLogoSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</PackageLogoSource>
+    <BadgeLogoSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</BadgeLogoSource>
+    <AppIconSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</AppIconSource>
+    <LargeTileSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</LargeTileSource>
+    <WideTileSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</WideTileSource>
+    <MediumTileSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</MediumTileSource>
+    <SmallTileSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</SmallTileSource>
+    <SplashScreenSource>E:\__BuildSource\__SVN__\DSO138-MINI-Capture\src\Assets\OSCIL-ICON.png</SplashScreenSource>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64|arm|arm64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>True</PackageOptionalProjectsInIdeBuilds>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+</Project>

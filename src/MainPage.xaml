@@ -1,0 +1,335 @@
+﻿<Page
+    x:Name="mainWindow"
+    x:Class="DSO138_Capture.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mainPage="using:DSO138_Capture"
+    xmlns:devicePage="using:DSO138Device"
+    xmlns:oxy="using:OxyPlot.Windows"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance mainPage:MainPage}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+
+        <DataTemplate x:Key="DeviceTimeTemplate" x:DataType="devicePage:DsoData">
+            <TextBlock 
+                Text="{x:Bind Path=DateCreated, Mode=OneWay}"
+                x:Phase="1"
+                Margin="0,5,0,5"/>
+        </DataTemplate>
+        <DataTemplate x:Key="DeviceSelectTemplate" x:DataType="devicePage:DsoDeviceList">
+            <TextBlock
+                Text="{x:Bind Path=Name, Mode=OneWay}"
+                x:Phase="1"
+                Margin="0,5,0,5"/>
+        </DataTemplate>
+        <DataTemplate x:Key="MenuNavTemplate" x:DataType="mainPage:NavMenu">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,0"
+                        AutomationProperties.Name="{x:Bind Label}">
+                <SymbolIcon Symbol="{x:Bind Icon}" Foreground="{x:Bind Path=BrushIcon, Mode=OneWay}"/>
+                <TextBlock 
+                    Text="{x:Bind Label}"
+                    Margin="14,0,0,0"
+                     Foreground="{x:Bind Path=BrushText, Mode=OneWay}"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <Grid>
+        <SplitView x:Name="menuSplit"
+                   PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                   OpenPaneLength="320"
+                   CompactPaneLength="46"
+                   DisplayMode="CompactInline"
+                   IsPaneOpen="{x:Bind Path=guiCtrl.isMenuOpen, Mode=OneWay, FallbackValue=True}">
+            <SplitView.Pane>
+                <Grid
+                    VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <SymbolIcon x:Name="PaneToggle"
+                                Grid.Row="0"
+                                Margin="14,12,10,10"
+                                Tapped="_menuList_ToggleClick"
+                                HorizontalAlignment="Left"
+                                Symbol="ShowBcc" />
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        Margin="14,0,0,10" >
+                        <SymbolIcon
+                            Tapped="_menuList_OpenClick"
+                            Symbol="Setting" />
+                        <ComboBox x:Name="DeviceSelectList"
+                                  ItemsSource="{x:Bind deviceList}"
+                                  ItemTemplate="{StaticResource DeviceSelectTemplate}"
+                                  SelectionChanged="_deviceList_Selected"
+                                  Width="260"
+                                  Margin="14,0,0,0"
+                                  PlaceholderText="Select COM port"/>
+                    </StackPanel>
+                    <ListView x:Name="menuList"
+                           Grid.Row="2"
+                           VerticalAlignment="Top"
+                           Margin="0,0,0,10"
+                           SelectionMode="None"
+                           ItemClick="_menuList_ItemClick"
+                           IsItemClickEnabled="True"
+                           ItemsSource="{x:Bind Path=guiCtrl.navigtionList, Mode=OneWay}"
+                           ItemTemplate="{StaticResource MenuNavTemplate}">
+                    </ListView>
+                    <TimePicker x:Name="timeSelect"
+                            Grid.Row="3"
+                            VerticalAlignment="Top"
+                            Width="260"
+                            Margin="46,0,0,10"
+                            ClockIdentifier="24HourClock"
+                            MinuteIncrement="3"
+                            TimeChanged="timeSelect_TimeChanged" />
+                    <ListView x:Name="timeList"
+                            Grid.Row="4"
+                            VerticalAlignment="Top"
+                            Margin="46,0,0,10"
+                            SelectionMode="Single"
+                            ShowsScrollingPlaceholders="True"
+                            ScrollViewer.CanContentRenderOutsideBounds="True"
+                            ScrollViewer.BringIntoViewOnFocusChange="True"
+                            ScrollViewer.IsVerticalScrollChainingEnabled="True"
+                            ScrollViewer.VerticalScrollMode="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible"
+                            ScrollViewer.IsVerticalRailEnabled="True"
+                            ScrollViewer.IsScrollInertiaEnabled="True"
+                            ItemClick="_timeList_ItemClick"
+                            IsItemClickEnabled="True"
+                            ItemsSource="{x:Bind deviceData}"
+                            ItemTemplate="{StaticResource DeviceTimeTemplate}">
+                    </ListView>
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid
+                VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <RelativePanel
+                    Visibility="{x:Bind Path=guiCtrl.visibilityGraph, Mode=OneWay}">
+                    <Border x:Name="xCouple"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObCouple}"
+                        Background="{StaticResource DSOfCouple}">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="Couple"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.Couple, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xVSen"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObVSen}"
+                        Background="{StaticResource DSOfVSen}"
+                        RelativePanel.RightOf="xCouple">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="VSen"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.VSen, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xTimebase"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObTimebase}"
+                        Background="{StaticResource DSOfTimebase}"
+                        RelativePanel.RightOf="xVSen">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="Timebase"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.Timebase, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="xTriggerMode"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObTriggerMode}"
+                        Background="{StaticResource DSOfTriggerMode}"
+                        RelativePanel.RightOf="xTimebase">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="TriggerMode"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.TriggerMode, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xTriggerSlope"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObTriggerSlope}"
+                        Background="{StaticResource DSOfTriggerSlope}"
+                        RelativePanel.RightOf="xTriggerMode">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="TriggerSlope"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.TriggerSlope, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xTriggerLevel"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObTriggerLevel}"
+                        Background="{StaticResource DSOfTriggerLevel}"
+                        RelativePanel.RightOf="xTriggerSlope">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="TriggerLevel"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.TriggerLevel, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="xSampleInterval"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObSampleInterval}"
+                        Background="{StaticResource DSOfSampleInterval}"
+                        RelativePanel.RightOf="xTriggerLevel">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="SampleInterval"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.SampleInterval, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xRecordLength"
+                        Style="{StaticResource BorderLegend}"
+                        BorderBrush="{StaticResource DSObRecordLength}"
+                        Background="{StaticResource DSOfRecordLength}"
+                        RelativePanel.RightOf="xSampleInterval">
+                        <StackPanel
+                            Style="{StaticResource StackLegend}">
+                            <TextBlock
+                                x:Uid="RecordLength"
+                                Style="{StaticResource TextLegendTitle}"/>
+                            <TextBlock
+                                Text="{x:Bind Path=guiCtrl.dataDso.info.RecordLength, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource TextLegendValue}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="xPlotContainer"
+                            Width="1200"
+                            Height="800"
+                            Background="Transparent"
+                            RelativePanel.Below="xRecordLength">
+                        <oxy:PlotView x:Name="xPlot"
+                                      Background="Transparent"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Model="{x:Bind Path=guiCtrl.plotModel, Mode=OneWay}">
+                        </oxy:PlotView>
+                    </Border>
+                </RelativePanel>
+                <StackPanel
+                    Visibility="{x:Bind Path=guiCtrl.visibilityColor, Mode=OneWay}"
+                    Style="{StaticResource StackLegend}"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="20,0,0,0">
+
+                    <ColorPicker x:Name="ColorLine"
+                                 IsMoreButtonVisible="True"
+                                 IsColorSliderVisible="True"
+                                 IsColorChannelTextInputVisible="True"
+                                 IsHexInputVisible="True"
+                                 IsAlphaEnabled="False"
+                                 IsAlphaSliderVisible="True"
+                                 IsAlphaTextInputVisible="True" />
+                    <StackPanel
+                        Style="{StaticResource StackLegend}"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                        <Button
+                            x:Uid="DoneButton"
+                            Margin="0,10,0,0"
+                            Style="{StaticResource AccentButtonStyle}"
+                            Click="_colorLine_ButtonClick" />
+                        <ToggleSwitch
+                            x:Uid="Themes"
+                            Margin="100,0,0,0"
+                            IsOn="{x:Bind Path=guiCtrl.isChangeTheme, Mode=TwoWay}"
+                            Toggled="_theme_ToggleClick" />
+                    </StackPanel>
+                    <HyperlinkButton
+                        x:Uid="Git"
+                        Margin="0,30,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsEnabled="True" />
+                </StackPanel>
+
+                <Border x:Name="ErrorBoxContainer"
+                        Visibility="Collapsed">
+                    <Border.ContextFlyout>
+                        <Flyout x:Name="ErrorBoxFlyout"
+                                ShowMode="Standard"
+                                Placement="TopEdgeAlignedLeft">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                BorderBrush="{StaticResource ErrorF}"
+                                Background="{StaticResource ErrorB}">
+                                <TextBlock x:Name="ErrorBox"
+                                           Style="{StaticResource TextErrorBox}"/>
+                                <HyperlinkButton
+                                    x:Uid="ReportToGit"
+                                    Style="{StaticResource TextErrorLink}"
+                                    IsEnabled="True"/>
+                            </StackPanel>
+                        </Flyout>
+                    </Border.ContextFlyout>
+                </Border>
+
+            </Grid>
+
+        </SplitView>
+    </Grid>
+</Page>
