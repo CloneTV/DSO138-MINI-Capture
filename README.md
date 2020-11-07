@@ -1,4 +1,4 @@
-# DSO138 USB Data plot
+# DSO138 MINI - USB Data plot
 DSO138 MINI - capture the waveform data and plot, save, export waveform and data.
 Windows UWP software, support platform: `x86`,`x64`,`ARM`,`ARM64`
 
