@@ -111,11 +111,27 @@ namespace DSO138_Capture
         private void _onDeviceList(object sender, DsoDeviceList e)
         {
             deviceList.Add(e);
+            DeviceSelectList.SelectedItem = e;
         }
 
         private void _onReadDevice(object sender, DsoData e)
         {
             deviceData.Insert(0, e);
+            bool b = (guiCtrl.listBadgeCount == 0);
+            guiCtrl.listBadgeCount = deviceData.Count;
+            if (b)
+            {
+                try
+                {
+                    Style badgeEnable = (Style)Application.Current.Resources["BadgeEnable"];
+                    if (badgeEnable != null)
+                        timeBadge.Style = badgeEnable;
+                }
+                catch (Exception ex)
+                {
+                    _errorMessage(ex.Message);
+                }
+            }
         }
 
         private void _deviceList_Selected(object sender, SelectionChangedEventArgs e)

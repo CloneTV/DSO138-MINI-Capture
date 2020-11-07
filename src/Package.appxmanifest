@@ -10,7 +10,7 @@
   <Identity
     Name="a04e5b58-a034-4203-aa2e-ded423f150fc"
     Publisher="CN=DSO138-MINI-Capture"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="a04e5b58-a034-4203-aa2e-ded423f150fc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

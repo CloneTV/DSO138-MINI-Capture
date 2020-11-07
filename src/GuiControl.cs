@@ -189,6 +189,26 @@ namespace DSO138_Capture
             set { }
         }
 
+        public bool isBadgeEnable
+        {
+            get { return (guiTheme_.listBadgeCount > 0); }
+            set { }
+        }
+
+        public int listBadgeCount
+        {
+            get { return guiTheme_.listBadgeCount; }
+            set
+            {
+                if (value != guiTheme_.listBadgeCount)
+                {
+                    guiTheme_.listBadgeCount = value;
+                    OnPropertyChanged("listBadgeCount");
+                    OnPropertyChanged("isBadgeEnable");
+                }
+            }
+        }
+
         public Color colorLine
         {
             get { return guiTheme_.colorLine; }
@@ -198,6 +218,8 @@ namespace DSO138_Capture
                 {
                     guiTheme_.colorLine = value;
                     guiPlot_.plotFill(guiTheme_.colorLine, ref dataDso_);
+                    guiPlot_.plotSetAnnotations(guiTheme_.isChangeTheme, ref dataDso_);
+                    guiPlot_.plotChangeTheme(guiTheme_.isChangeTheme);
                     OnPropertyChanged("colorLine");
                     OnPropertyChanged("plotModel");
                     onPlotRefresh?.Invoke(this, true);

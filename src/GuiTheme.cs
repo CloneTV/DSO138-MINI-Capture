@@ -17,6 +17,7 @@ namespace DSO138_Capture
         public bool isSerialSelected = false;
         public bool isDsoDataEmpty = true;
         public bool isChangeTheme = false;
+        public int  listBadgeCount = 0;
         public Color colorLine = Color.FromArgb(0xff, 219, 52, 34);
 
         public GuiTheme()

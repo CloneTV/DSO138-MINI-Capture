@@ -89,14 +89,25 @@
                            ItemsSource="{x:Bind Path=guiCtrl.navigtionList, Mode=OneWay}"
                            ItemTemplate="{StaticResource MenuNavTemplate}">
                     </ListView>
-                    <TimePicker x:Name="timeSelect"
-                            Grid.Row="3"
+                    
+                    <StackPanel
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        Margin="11,0,0,10" >
+                        <PersonPicture x:Name="timeBadge"
+                            Style="{StaticResource BadgeDisable}"
+                            Tapped="_menuList_OpenClick"
+                            BadgeNumber="{x:Bind Path=guiCtrl.listBadgeCount, Mode=OneWay}"/>
+                        <TimePicker x:Name="timeSelect"
                             VerticalAlignment="Top"
                             Width="260"
-                            Margin="46,0,0,10"
+                            Margin="11,0,0,10"
                             ClockIdentifier="24HourClock"
                             MinuteIncrement="3"
                             TimeChanged="timeSelect_TimeChanged" />
+                    </StackPanel>
+
                     <ListView x:Name="timeList"
                             Grid.Row="4"
                             VerticalAlignment="Top"
