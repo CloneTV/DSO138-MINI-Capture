@@ -1,6 +1,16 @@
 # DSO138 USB Data plot
-DSO138 capture the waveform data and plot waveform and data
+DSO138 MINI - capture the waveform data and plot, save, export waveform and data.
+Windows UWP software, support platform: `x86`,`x64`,`ARM`,`ARM64`
 
+![DSO138 MINI - capture 1](docs/Image1.png)  
+
+![DSO138 MINI - capture 1](docs/Image2.png)  
+
+![DSO138 MINI - capture 1](docs/Image3.png)  
+
+![DSO138 MINI - capture 1](docs/Image4.png)  
+
+![DSO138 MINI - capture 1](docs/Image5.png)  
 
 ### waveform some measured and calculated data
 
@@ -26,4 +36,7 @@ Duty, 50.5 %           - measured duty cycle
 SampleInterval,00020us - sample interval time
 ```
 
-see https://www.rudiswiki.de/wiki9/JyeTechDSO150
+### Another alternative
+
+[Alternative way](blob/main/Alternative/README.md)  
+[rudiswiki.de - JyeTechDSO150](https://www.rudiswiki.de/wiki9/JyeTechDSO150)  
